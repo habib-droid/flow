@@ -1,0 +1,416 @@
+
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents the application-specific profile information for a user, linked to an external authentication system. This stores user preferences and relationships to their palettes and collections.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address, typically provided by the authentication system.",
+          "format": "email"
+        },
+        "username": {
+          "type": "string",
+          "description": "A public-facing username or display name for the user."
+        },
+        "preferredTheme": {
+          "type": "string",
+          "description": "The user's preferred application theme (e.g., 'dark', 'light')."
+        },
+        "role": {
+          "type": "string",
+          "description": "The user's role in the system (e.g., 'user', 'admin').",
+          "enum": ["user", "admin"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the user profile was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the user profile was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "username",
+        "preferredTheme",
+        "role",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Palette": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Palette",
+      "type": "object",
+      "description": "Represents a user-generated or system-generated color palette, including its colors, metadata, and sharing options.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Palette entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who owns this palette. (Relationship: UserProfile 1:N Palette)"
+        },
+        "name": {
+          "type": "string",
+          "description": "A user-defined name for the color palette."
+        },
+        "description": {
+          "type": "string",
+          "description": "An optional description providing more context about the palette."
+        },
+        "colors": {
+          "type": "array",
+          "description": "An ordered list of color objects within the palette. Each object details a specific color and its properties.",
+          "items": {
+            "type": "boolean"
+          }
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "Flag indicating if the palette is publicly visible on the 'Explore' page."
+        },
+        "shareSlug": {
+          "type": "string",
+          "description": "A unique, URL-friendly slug for sharing this specific palette."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Keywords or descriptive tags associated with the palette (e.g., 'warm', 'pastel', 'luxury') for filtering and searching.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceImageUri": {
+          "type": "string",
+          "description": "Optional URI to the image from which this palette was extracted, if applicable.",
+          "format": "uri"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the palette was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the palette was last updated.",
+          "format": "date-time"
+        },
+        "likeCount": {
+          "type": "number",
+          "description": "Denormalized count of likes this palette has received from users. (Relationship: UserProfile N:N Palette via UserLikePalette)"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "colors",
+        "isPublic",
+        "createdAt",
+        "updatedAt",
+        "likeCount"
+      ]
+    },
+    "Collection": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Collection",
+      "type": "object",
+      "description": "Allows users to organize their saved palettes into custom groupings.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Collection entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who owns this collection. (Relationship: UserProfile 1:N Collection)"
+        },
+        "name": {
+          "type": "string",
+          "description": "A user-defined name for the collection."
+        },
+        "description": {
+          "type": "string",
+          "description": "An optional description for the collection."
+        },
+        "paletteIds": {
+          "type": "array",
+          "description": "References to Palettes included in this collection. (Relationship: Collection N:N Palette)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the collection was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the collection was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "paletteIds",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserLikePalette": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserLikePalette",
+      "type": "object",
+      "description": "Represents a user's 'like' action on a specific palette, establishing an N:N relationship between UserProfile and Palette.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserLikePalette entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who liked the palette. (Relationship: UserProfile N:N Palette via UserLikePalette)"
+        },
+        "paletteId": {
+          "type": "string",
+          "description": "Reference to the Palette that was liked. (Relationship: UserProfile N:N Palette via UserLikePalette)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the palette was liked.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "paletteId",
+        "createdAt"
+      ]
+    },
+    "UserFavoriteColor": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserFavoriteColor",
+      "type": "object",
+      "description": "Stores individual colors that a user has marked as favorites for quick access.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserFavoriteColor entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who favorited the color. (Relationship: UserProfile 1:N UserFavoriteColor)"
+        },
+        "hexCode": {
+          "type": "string",
+          "description": "The hexadecimal code of the favorited color (e.g., '#FF0000')."
+        },
+        "name": {
+          "type": "string",
+          "description": "An optional, user-defined name for the favorite color (e.g., 'My Brand Red')."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the color was marked as favorite.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "hexCode",
+        "createdAt"
+      ]
+    },
+    "UserRecentPalette": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserRecentPalette",
+      "type": "object",
+      "description": "Records a user's recent interactions with palettes, used to build a history panel.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserRecentPalette entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who viewed the palette. (Relationship: UserProfile 1:N UserRecentPalette)"
+        },
+        "paletteId": {
+          "type": "string",
+          "description": "Reference to the Palette that was recently viewed. (Relationship: Palette 1:N UserRecentPalette)"
+        },
+        "viewedAt": {
+          "type": "string",
+          "description": "Timestamp when the palette was last viewed by the user, for ordering history.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "paletteId",
+        "viewedAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores application-specific profile information for each user. The document ID `{userId}` MUST match the authenticated user's `request.auth.uid`. This path ensures private access to user profiles.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique ID of the authenticated user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/palettes/{paletteId}",
+        "definition": {
+          "entityName": "Palette",
+          "schema": {
+            "$ref": "#/backend/entities/Palette"
+          },
+          "description": "Stores private or draft color palettes created and owned by a specific user. The `{userId}` in the path ensures strict ownership and read/write access. Includes denormalized 'userId' field for internal consistency.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique ID of the user who owns this palette."
+            },
+            {
+              "name": "paletteId",
+              "description": "The unique ID of the specific color palette."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/public_palettes/{paletteId}",
+        "definition": {
+          "entityName": "Palette",
+          "schema": {
+            "$ref": "#/backend/entities/Palette"
+          },
+          "description": "Stores color palettes that are marked as public and are browsable on the 'Explore' page. Documents in this collection are publicly readable. Write access is restricted to the original creator, enforced by the 'userId' (renamed to 'ownerId' in rules context) field within the document for authorization independence.",
+          "params": [
+            {
+              "name": "paletteId",
+              "description": "The unique ID of the public color palette."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/collections/{collectionId}",
+        "definition": {
+          "entityName": "Collection",
+          "schema": {
+            "$ref": "#/backend/entities/Collection"
+          },
+          "description": "Stores user-defined collections of saved palettes. The `{userId}` in the path ensures that only the owning user can access their collections. Includes denormalized 'userId' field for internal consistency.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique ID of the user who owns this collection."
+            },
+            {
+              "name": "collectionId",
+              "description": "The unique ID of the specific collection."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/likedPalettes/{paletteId}",
+        "definition": {
+          "entityName": "UserLikePalette",
+          "schema": {
+            "$ref": "#/backend/entities/UserLikePalette"
+          },
+          "description": "Represents a user's 'like' on a specific palette. The document ID `{paletteId}` allows for easy checking of a user's like status on a given palette. The `{userId}` in the path ensures that only the liking user can create/delete their own like entries. Includes denormalized 'userId' field for internal consistency.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique ID of the user who liked the palette."
+            },
+            {
+              "name": "paletteId",
+              "description": "The unique ID of the palette that was liked, serving as the document ID here."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/favoriteColors/{favoriteColorId}",
+        "definition": {
+          "entityName": "UserFavoriteColor",
+          "schema": {
+            "$ref": "#/backend/entities/UserFavoriteColor"
+          },
+          "description": "Stores individual colors that a user has marked as favorites for quick access. The `{userId}` in the path ensures private ownership. Includes denormalized 'userId' field for internal consistency.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique ID of the user who favorited the color."
+            },
+            {
+              "name": "favoriteColorId",
+              "description": "The unique ID of the specific favorite color entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/recentPalettes/{recentPaletteId}",
+        "definition": {
+          "entityName": "UserRecentPalette",
+          "schema": {
+            "$ref": "#/backend/entities/UserRecentPalette"
+          },
+          "description": "Records a user's recent interactions with palettes, used to build a history panel. The `{userId}` in the path ensures private access to the user's history. Includes denormalized 'userId' field for internal consistency.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique ID of the user whose recent history is being stored."
+            },
+            {
+              "name": "recentPaletteId",
+              "description": "The unique ID for this recent palette entry."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

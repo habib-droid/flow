@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 15% 10%;
+    --foreground: 0 0% 98%;
+    --card: 260 15% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 260 15% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 260 55% 61%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 50% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 260 10% 20%;
+    --muted-foreground: 260 5% 70%;
+    --accent: 220 50% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 260 15% 20%;
+    --input: 260 15% 20%;
+    --ring: 260 55% 61%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 260 15% 10%;
+    --foreground: 0 0% 98%;
+    --card: 260 15% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 260 15% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 260 55% 61%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 50% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 260 10% 20%;
+    --muted-foreground: 260 5% 70%;
+    --accent: 220 50% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 260 15% 20%;
+    --input: 260 15% 20%;
+    --ring: 260 55% 61%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground selection:bg-primary/30;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.glass {
+  @apply bg-white/5 backdrop-blur-md border border-white/10;
+}
+
+.color-column-transition {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-muted rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
