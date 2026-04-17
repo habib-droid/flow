@@ -1,0 +1,20 @@
+{
+  "node": {
+    "40d99bcd0fa8d085972d6648acb4aba2adcf0ce097": {
+      "workers": {
+        "app/page": {
+          "moduleId": "[project]/.next-internal/server/app/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/generate-palette-from-prompt.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "generatePaletteFromPrompt",
+          "filename": "src/ai/flows/generate-palette-from-prompt.ts"
+        }
+      },
+      "layer": {
+        "app/page": "action-browser"
+      },
+      "exportedName": "generatePaletteFromPrompt",
+      "filename": "src/ai/flows/generate-palette-from-prompt.ts"
+    }
+  },
+  "edge": {}
+}
