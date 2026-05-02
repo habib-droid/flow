@@ -1,4 +1,5 @@
 {
+  "/contrast-checker/page": "app/contrast-checker/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/image-to-palette/page": "app/image-to-palette/page.js",
   "/login/page": "app/login/page.js",
