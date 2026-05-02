@@ -14,6 +14,21 @@
       },
       "filename": "src/ai/flows/generate-palette-from-prompt.ts",
       "exportedName": "generatePaletteFromPrompt"
+    },
+    "4088cb32c3e027116df7f989b7b0885e69d1028ad3": {
+      "workers": {
+        "app/image-to-palette/page": {
+          "moduleId": "[project]/.next-internal/server/app/image-to-palette/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/extract-palette-from-image.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "extractPaletteFromImage",
+          "filename": "src/ai/flows/extract-palette-from-image.ts"
+        }
+      },
+      "layer": {
+        "app/image-to-palette/page": "action-browser"
+      },
+      "filename": "src/ai/flows/extract-palette-from-image.ts",
+      "exportedName": "extractPaletteFromImage"
     }
   },
   "edge": {},
